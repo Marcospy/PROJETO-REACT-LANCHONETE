@@ -1,5 +1,5 @@
 import React from 'react'
-import ItemCardapio from './ItemCardapio' // Importando o componente que você criou
+import ItemCardapio from './ItemCardapio'
 
 function App() {
   const itens = [
@@ -10,38 +10,85 @@ function App() {
     { id: 5, nome: "🍊 Suco Natural de Laranja", preco: 10.00, descricao: "Suco natural, feito na hora (300ml)." }
   ];
 
+  const cores = {
+    vermelhoVibrante: "#E53935",
+    laranjaDestaque: "#FB8C00",
+    amareloOuro: "#FFD600",
+    fundoAlegre: "#FFFDED",
+    texto: "#3E2723"
+  };
+
   return (
-    <div style={{ backgroundColor: '#FFFDED', minHeight: '100vh', padding: '40px 20px' }}>
-      
-      {/* CSS do efeito zoom (mantemos aqui no App ou index.css) */}
-      <style>{`
-        .item-cardapio { transition: transform 0.3s ease; cursor: pointer; }
-        .item-cardapio:hover { transform: scale(1.05); }
-      `}</style>
+    <>
+      <style>
+        {`
+          .item-cardapio {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+          }
+          .item-cardapio:hover {
+            transform: scale(1.10) translateZ(10px);
+            box-shadow: 0 15px 30px rgba(229, 57, 53, 0.2) !important;
+          }
+        `}
+      </style>
 
-      <header style={{ textAlign: 'center', marginBottom: '50px' }}>
-        <h1 style={{ color: '#E53935', fontSize: '2.5rem' }}>Lanchonete do Marcos</h1>
-      </header>
-      
       <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
-        gap: '30px',
-        maxWidth: '1200px',
-        margin: '0 auto'
+        backgroundColor: cores.fundoAlegre, 
+        minHeight: '100vh', 
+        padding: '40px 20px', 
+        fontFamily: "'Poppins', sans-serif, 'Arial'",
+        color: cores.texto
       }}>
-        {/* Usando o componente dentro do MAP */}
-        {itens.map((lanche) => (
-          <ItemCardapio 
-            key={lanche.id} 
-            nome={lanche.nome} 
-            preco={lanche.preco} 
-            descricao={lanche.descricao} 
-          />
-        ))}
-      </div>
+        
+        {/* Cabeçalho Bonitão Restaurado */}
+        <div style={{ 
+          textAlign: 'center', 
+          marginBottom: '50px',
+          background: `linear-gradient(135deg, ${cores.vermelhoVibrante} 0%, ${cores.laranjaDestaque} 100%)`,
+          padding: '40px',
+          borderRadius: '25px',
+          boxShadow: '0 10px 20px rgba(0,0,0,0.1)'
+        }}>
+          <h1 style={{ 
+            color: cores.amareloOuro, 
+            fontSize: '3rem', 
+            margin: 0,
+            textTransform: 'uppercase',
+            letterSpacing: '3px',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+          }}>
+            Lanchonete do Marcos
+          </h1>
+          <p style={{ color: 'white', marginTop: '15px', fontWeight: 'bold', fontSize: '1.2rem' }}>
+            A alegria do sabor em cada mordida!
+          </p>
+        </div>
+        
+        {/* Grid de Itens */}
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
+          gap: '30px',
+          maxWidth: '1200px',
+          margin: '0 auto',
+          perspective: '1000px'
+        }}>
+          {itens.map((lanche) => (
+            <ItemCardapio 
+              key={lanche.id} 
+              nome={lanche.nome} 
+              preco={lanche.preco} 
+              descricao={lanche.descricao} 
+            />
+          ))}
+        </div>
 
-    </div>
+        <footer style={{ textAlign: 'center', marginTop: '60px', color: cores.texto, fontWeight: 'bold' }}>
+          <p>Aberto todos os dias até as 23h</p>
+        </footer>
+      </div>
+    </>
   )
 }
 
