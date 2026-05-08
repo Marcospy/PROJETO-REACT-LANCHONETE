@@ -1,48 +1,29 @@
 import React from 'react'
-import ItemCardapio from './ItemCardapio' // Importando o componente que você criou
 
-function App() {
-  const itens = [
-    { id: 1, nome: "🍔 X-Burger Clássico", preco: 25.90, descricao: "Pão brioche, carne de sol 180g, queijo coalho." },
-    { id: 2, nome: "🍟 Batata Frita Especial", preco: 15.00, descricao: "Porção individual com cheddar e bacon." },
-    { id: 3, nome: "🌭 Hot Dog Completo", preco: 12.50, descricao: "Salsicha artesanal, purê de batata, milho e batata palha." },
-    { id: 4, nome: "🥤 Milkshake de Chocolate", preco: 18.00, descricao: "Feito com sorvete premium e calda de brigadeiro." },
-    { id: 5, nome: "🍊 Suco Natural de Laranja", preco: 10.00, descricao: "Suco natural, feito na hora (300ml)." }
-  ];
-
+// Recebemos a função 'funcaoAdicionar' via props
+function ItemCardapio({ nome, preco, descricao, funcaoAdicionar }) {
   return (
-    <div style={{ backgroundColor: '#FFFDED', minHeight: '100vh', padding: '40px 20px' }}>
+    <div className="item-cardapio" style={{ 
+      backgroundColor: 'white', borderRadius: '20px', border: '2px solid #FFD600', padding: '25px' 
+    }}>
+      <div style={{ backgroundColor: '#FB8C00', height: '10px', margin: '-25px -25px 20px -25px' }}></div>
       
-      {/* CSS do efeito zoom (mantemos aqui no App ou index.css) */}
-      <style>{`
-        .item-cardapio { transition: transform 0.3s ease; cursor: pointer; }
-        .item-cardapio:hover { transform: scale(1.05); }
-      `}</style>
+      <h3 style={{ color: '#E53935', margin: '0 0 10px 0' }}>{nome}</h3>
+      <p style={{ color: '#6D4C41', fontStyle: 'italic', fontSize: '0.9rem' }}>{descricao}</p>
 
-      <header style={{ textAlign: 'center', marginBottom: '50px' }}>
-        <h1 style={{ color: '#E53935', fontSize: '2.5rem' }}>Lanchonete do Marcos</h1>
-      </header>
-      
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
-        gap: '30px',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
-        {/* Usando o componente dentro do MAP */}
-        {itens.map((lanche) => (
-          <ItemCardapio 
-            key={lanche.id} 
-            nome={lanche.nome} 
-            preco={lanche.preco} 
-            descricao={lanche.descricao} 
-          />
-        ))}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px dashed #FFD600', paddingTop: '15px', marginTop: '15px' }}>
+        <span style={{ fontWeight: '900', fontSize: '1.4rem' }}>R$ {preco.toFixed(2)}</span>
       </div>
 
+      {/* 6. Botão que chama a função do pai ao clicar */}
+      <button 
+        className="btn-adicionar" 
+        onClick={funcaoAdicionar}
+      >
+        Adicionar ao Pedido
+      </button>
     </div>
-  )
+  );
 }
 
-export default App
+export default ItemCardapio;
