@@ -1,11 +1,10 @@
-import React, { useState } from 'react' // 1. Importamos o useState
+import React, { useState } from 'react'
 import ItemCardapio from './ItemCardapio'
 
 function App() {
-  // 2. Criamos o estado do contador (começa em 0)
+  // PASSO 3: Estado do contador
   const [totalItens, setTotalItens] = useState(0);
 
-  // 3. Função que será chamada quando clicar no botão
   const adicionarAoPedido = () => {
     setTotalItens(totalItens + 1);
   };
@@ -18,47 +17,95 @@ function App() {
     { id: 5, nome: "🍊 Suco Natural de Laranja", preco: 10.00, descricao: "Suco natural, feito na hora (300ml)." }
   ];
 
+  const cores = {
+    vermelhoVibrante: "#E53935",
+    laranjaDestaque: "#FB8C00",
+    amareloOuro: "#FFD600",
+    fundoAlegre: "#FFFDED",
+    texto: "#3E2723"
+  };
+
   return (
     <>
       <style>
-        {`.item-cardapio { transition: transform 0.3s ease; cursor: pointer; }
-          .item-cardapio:hover { transform: scale(1.05); }
-          .btn-adicionar { 
-            background-color: #E53935; color: white; border: none; 
-            padding: 10px 15px; border-radius: 8px; font-weight: bold; 
-            cursor: pointer; transition: background 0.2s; width: 100%; margin-top: 15px;
+        {`
+          .item-cardapio {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
           }
-          .btn-adicionar:hover { background-color: #FB8C00; }
-          .contador-container {
-            background: white; padding: 10px 20px; border-radius: 50px;
-            display: inline-block; margin-top: 15px; color: #E53935;
-            font-weight: bold; border: 2px solid #FFD600;
+          .item-cardapio:hover {
+            transform: scale(1.10) translateZ(10px);
+            box-shadow: 0 15px 30px rgba(229, 57, 53, 0.2) !important;
+          }
+          /* Estilo do botão adicionar */
+          .btn-adicionar {
+            background-color: ${cores.vermelhoVibrante};
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: background 0.2s;
+          }
+          .btn-adicionar:hover {
+            background-color: ${cores.laranjaDestaque};
           }
         `}
       </style>
 
-      <div style={{ backgroundColor: '#FFFDED', minHeight: '100vh', padding: '40px 20px', fontFamily: 'Arial' }}>
+      <div style={{ 
+        backgroundColor: cores.fundoAlegre, 
+        minHeight: '100vh', 
+        padding: '40px 20px', 
+        fontFamily: "'Poppins', sans-serif, 'Arial'",
+        color: cores.texto
+      }}>
         
-        <div style={{ textAlign: 'center', marginBottom: '50px', background: 'linear-gradient(135deg, #E53935 0%, #FB8C00 100%)', padding: '40px', borderRadius: '25px' }}>
-          <h1 style={{ color: '#FFD600', margin: 0 }}>Lanchonete do Marcos</h1>
+        <div style={{ 
+          textAlign: 'center', 
+          marginBottom: '50px',
+          background: `linear-gradient(135deg, ${cores.vermelhoVibrante} 0%, ${cores.laranjaDestaque} 100%)`,
+          padding: '40px',
+          borderRadius: '25px',
+          boxShadow: '0 10px 20px rgba(0,0,0,0.1)'
+        }}>
+          <h1 style={{ color: cores.amareloOuro, fontSize: '3rem', margin: 0, textTransform: 'uppercase', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
+            Lanchonete do Marcos
+          </h1>
           
-          {/* 4. Mostrando o total na tela */}
-          <div className="contador-container">
+          {/* PASSO 3: Exibição do Total */}
+          <div style={{ 
+            backgroundColor: 'white', 
+            display: 'inline-block', 
+            padding: '10px 25px', 
+            borderRadius: '50px', 
+            marginTop: '20px',
+            fontWeight: 'bold',
+            color: cores.vermelhoVibrante,
+            border: `2px solid ${cores.amareloOuro}`
+          }}>
             🛒 Total de itens no pedido: {totalItens}
           </div>
         </div>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '30px', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '30px', maxWidth: '1200px', margin: '0 auto', perspective: '1000px' }}>
           {itens.map((lanche) => (
             <ItemCardapio 
               key={lanche.id} 
               nome={lanche.nome} 
               preco={lanche.preco} 
               descricao={lanche.descricao}
-              funcaoAdicionar={adicionarAoPedido} // 5. Passamos a função para o filho
+              aoAdicionar={adicionarAoPedido} // Passando a função
             />
           ))}
         </div>
+
+        <footer style={{ textAlign: 'center', marginTop: '60px', color: cores.texto, fontWeight: 'bold' }}>
+          <p>Aberto todos os dias até as 23h</p>
+        </footer>
       </div>
     </>
   )
